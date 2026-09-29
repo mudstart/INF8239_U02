@@ -23,7 +23,7 @@ def main() -> None:
     args = parser.parse_args()
     df = load_dataset()
     sentences = [tokenize(value) for value in df[settings.text_column].dropna()]
-    model = Word2Vec(sentences, vector_size=60, window=5, min_count=1, workers=1, seed=42, epochs=30)
+    model = Word2Vec(sentences, vector_size=60, window=5, min_count=5, workers=1, seed=42, epochs=30)
     (ROOT / "models").mkdir(exist_ok=True)
     (ROOT / "reports").mkdir(exist_ok=True)
     model.save(str(ROOT / "models/word2vec.model"))
@@ -46,7 +46,11 @@ def main() -> None:
     metrics.to_csv(ROOT / "reports/centralities.csv")
     communities = list(nx.community.greedy_modularity_communities(graph))
     community = {node: index for index, group in enumerate(communities) for node in group}
-    print("Nodos:", graph.number_of_nodes(), "Aristas:", graph.number_of_edges())
+    print(
+        "Nodos:", graph.number_of_nodes(),
+        "Aristas:", graph.number_of_edges(),
+        "Densidad:", round(nx.density(graph), 3),
+    )
     print("Comunidades:", len(communities), "Modularidad:", round(nx.community.modularity(graph, communities), 3))
     position = nx.spring_layout(graph, seed=42)
     nx.draw(graph, position, node_color=[community[node] for node in graph], cmap="tab10", with_labels=True, font_size=7)
