@@ -258,3 +258,23 @@ podrían dar otra partición.
 ocasional vale lo mismo que uno frecuente. La red es una foto agregada de dos años sin
 dirección: no permite saber quién influyó en quién ni en qué orden. Las centralidades
 describen posiciones en el grafo, no roles, poder ni causalidad.
+
+## Paso 8 · Portabilidad
+
+| Comprobación | Estado | Evidencia |
+|---|---|---|
+| Modelos y reportes en rutas relativas | Cumple | `embeddings_network.py` escribe con `ROOT / "models/..."` y `ROOT / "reports/..."`, donde `ROOT` se calcula desde la ubicación del proyecto; no hay rutas `C:\Users\...` en `src/`, `scripts/`, `app/` ni `tests/` |
+| Semilla y `workers=1` | Cumple | `Word2Vec(..., seed=42, workers=1)` y `spring_layout(seed=42)`. La ejecución en PowerShell y en Git Bash produjo exactamente el mismo vocabulario (1.858), cobertura (0,867) y vecinos con las mismas similitudes |
+| Documentación de la red | Cumple (red de demostración) | Paso 5: nodos, aristas, dirección (no dirigida), peso (1–7, ignorado por el script), periodo (1970–1972) y consentimiento (sin constancia) |
+| Visualización sin identificadores personales | Cumple | `network.png` y `social_network.graphml` identifican a los miembros solo con números 0–33; el único atributo por nodo es la facción (`club`) |
+
+**Límite de la reproducibilidad.** La coincidencia se comprobó en una sola máquina
+(Windows, Python 3.12.14, versiones fijadas por `uv.lock`). En otro sistema operativo o
+con otras versiones de gensim/NumPy los vectores pueden variar ligeramente. Para
+comprobarlo se comparan el vocabulario, la cobertura y los primeros vecinos, no los
+bytes de `word2vec.model`.
+
+**Si se usara una red real**, antes de publicar habría que documentar además cómo se
+obtuvo cada arista, qué ventana temporal cubre, si hay pesos y dirección, y contar con el
+consentimiento de las personas; los nodos se publicarían con identificadores
+seudonimizados.

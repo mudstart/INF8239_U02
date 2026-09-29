@@ -9,7 +9,7 @@ from sklearn.metrics import ConfusionMatrixDisplay, classification_report, f1_sc
 from sklearn.model_selection import train_test_split
 
 from inf8239_u02.config import ROOT, settings
-from inf8239_u02.data import load_dataset, validate_dataframe
+from inf8239_u02.data import anonymize_text, load_dataset, validate_dataframe
 from inf8239_u02.modeling import build_models
 
 
@@ -46,6 +46,7 @@ def main() -> None:
     plt.savefig(reports / "confusion_text.png", dpi=170)
     errors = pd.DataFrame({"text": x_test, "real": y_test, "predicted": selected_pred})
     errors = errors[errors["real"] != errors["predicted"]].copy()
+    errors["text"] = errors["text"].map(anonymize_text)
     errors["category"] = "REVISAR"
     errors.to_csv(reports / "error_analysis.csv", index=False)
     joblib.dump(selected, models_dir / "text_model.joblib")

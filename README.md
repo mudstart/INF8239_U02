@@ -151,6 +151,55 @@ sustituir los números por marcadores y añadir n-gramas de caracteres debería 
 falsos positivos por ambigüedad sin aumentar los falsos negativos. Se comprobará con la
 misma partición y midiendo esa categoría de error, no solo el F1 macro.
 
+## Resultados y cierre (LAB06 · Embeddings y redes)
+
+```bash
+uv run python scripts/embeddings_network.py --word call --network-demo
+```
+
+Detalle de los pasos 3 a 8: `reports/lab06_embeddings_redes.md`. Configuración de
+Word2Vec: `vector_size=60`, `window=5`, `min_count=5`, `epochs=30`, `seed=42`, `workers=1`.
+
+### Cierre interpretativo
+
+**Resultado de embeddings:** Word2Vec entrenado sobre los 5.574 SMS asocia *call* con el
+contexto del spam. Con `min_count=1`, los 10 vecinos más cercanos provenían del spam (6
+eran números de teléfono). Con `min_count=5`, queda 1 teléfono y aparecen vecinos
+relacionados con llamar (*speak*, *landline*, *ring*, *cal*), aunque persisten términos de
+concursos (*quoting*, *match*). Esto confirma desde otra representación el error de
+ambigüedad del LAB05, donde "Please call me" se clasificaba como spam.
+
+**Evidencia de cobertura:** con `min_count=1` la cobertura es 1,0 por construcción (todo
+token entra al vocabulario), pero el 51 % de los 8.713 términos aparece una sola vez. Con
+`min_count=5` el vocabulario baja a 1.858 términos y la cobertura a 0,867: el 13,3 % de
+los tokens (teléfonos, códigos, jerga y palabras raras) queda sin vector a cambio de
+vecinos más interpretables.
+
+**Resultado estructural de la red:** la red de demostración (club de karate de Zachary)
+tiene 34 nodos, 78 aristas no dirigidas y densidad 0,139. El algoritmo detecta 3
+comunidades con modularidad 0,411, que separan casi perfectamente las dos facciones reales
+del club (2 nodos mal agrupados de 34) pero parten una de ellas en dos.
+
+**Dos métricas comparadas:** grado e intermediación. Los nodos 3 y 31 tienen el mismo
+grado (6 conexiones), pero el 31 tiene una intermediación 11 veces mayor (0,138 frente a
+0,012), porque une al nodo 0 con otra comunidad, mientras que los vecinos del 3 están en
+su propio grupo y conectados entre sí.
+
+**Interpretación permitida:** "El nodo 0 tiene la mayor intermediación (0,438): en
+promedio está en el 44 % de los caminos mínimos entre otros nodos, calculado sin pesos".
+"*call* y *landline* aparecen en contextos similares en este corpus de SMS".
+
+**Interpretación que NO puede sostenerse:** que el nodo 0 o el 33 sea "la persona más
+influyente" o "el líder"; que el nodo 31 "controla la comunicación"; que las comunidades
+sean identidades sociales; que *call* y un número de teléfono tengan relación semántica, o
+que los vecinos de una palabra valgan fuera de este corpus de SMS en inglés de 2011.
+
+**Siguiente experimento:** entrenar Word2Vec sobre el corpus deduplicado y con los números
+sustituidos por un marcador (`<TELÉFONO>`), para comprobar si *call* deja de estar sesgada
+por plantillas de spam repetidas y si su vecindario pasa a ser mayoritariamente
+conversacional. En la red, recalcular las centralidades usando los pesos (1–7) y comparar
+si cambian los nodos con mayor intermediación.
+
 ## Interpretación
 
 Toda conclusión debe separar observación, evidencia, interpretación y decisión.

@@ -91,7 +91,7 @@ Verificaciones complementarias: tras eliminar duplicados quedan 5.171 mensajes (
 
 ## Riesgos, sesgos y usos prohibidos
 **Riesgos**
-- **Información personal:** algunos mensajes contienen números telefónicos, nombres propios y detalles de la vida privada. No se publican ejemplos sin anonimizar.
+- **Información personal:** algunos mensajes contienen números telefónicos, nombres propios y detalles de la vida privada. No se publican ejemplos sin anonimizar. `train_text.py` aplica `anonymize_text` (`src/inf8239_u02/data.py`) al escribir `reports/error_analysis.csv`, sustituyendo los números de 10 o más dígitos por `[TELÉFONO]`; los nombres propios no se detectan automáticamente y se revisan a mano (`[NOMBRE]`). Limitación: los vocabularios de `models/text_model.joblib` y `models/word2vec.model` conservan como tokens algunos números telefónicos del corpus (sin el mensaje asociado); eliminarlos exige reentrenar con los números sustituidos por un marcador.
 - **Contenido ofensivo:** puede haber lenguaje vulgar o de contenido sexual, sobre todo en el spam.
 
 **Sesgos previsibles**
