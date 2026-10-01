@@ -18,6 +18,7 @@ from inf8239_u02.data import sha256
 
 ZIP_URL = "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip"
 ZIP_PATH = ROOT / "data/raw/sms_spam_collection.zip"
+CSV_PATH = ROOT / "data/raw/dataset.csv"
 MEMBER = "SMSSpamCollection"
 
 
@@ -45,12 +46,13 @@ def main() -> None:
     args = parser.parse_args()
     download(args.force)
     df = convert()
-    output = settings.dataset_path
-    output.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(output, index=False, encoding="utf-8")
+    df.to_csv(CSV_PATH, index=False, encoding="utf-8")
     print(f"SHA-256 ZIP: {sha256(ZIP_PATH)}")
-    print(f"Guardado: {output.relative_to(ROOT)} · filas={len(df)}")
-    print(f"SHA-256 CSV: {sha256(output)}")
+    print(f"Guardado: {CSV_PATH.relative_to(ROOT)} · filas={len(df)}")
+    print(f"SHA-256 CSV: {sha256(CSV_PATH)}")
+    if settings.dataset_path != CSV_PATH:
+        print(f"Aviso: DATASET_PATH apunta a {settings.dataset_path.relative_to(ROOT)}; "
+              "copie .env.example como .env para usar este corpus.")
 
 
 if __name__ == "__main__":

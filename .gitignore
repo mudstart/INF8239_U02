@@ -8,8 +8,6 @@ data/raw/*
 data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
-uv.lock
-.env.example
-.python-version
 INF8239_U02_NLP_Proyecto_Base_uv.zip
 INF8239_U02_CV_Proyecto_Base_uv.zip
+Unidad 02. Manual laboratorios guiados.*

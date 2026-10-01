@@ -7,6 +7,7 @@ Proyecto base para LAB04–LAB06. No sustituya la comprensión por ejecución me
 ## Inicio rápido
 
 ```bash
+cp .env.example .env
 uv python install 3.12
 uv sync
 uv run pytest -q
@@ -14,7 +15,8 @@ uv run python scripts/prepare_sms_spam.py
 uv run python scripts/audit_data.py
 ```
 
-Copie `.env.example` como `.env` y configure el dataset aprobado.
+`.env.example` ya apunta al corpus aprobado (`data/raw/dataset.csv`); en PowerShell use
+`Copy-Item .env.example .env`. El archivo `.env` no se versiona.
 
 ## Dataset
 
