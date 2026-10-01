@@ -177,7 +177,6 @@ sustituir los números por marcadores y añadir n-gramas de caracteres debería 
 falsos positivos por ambigüedad sin aumentar los falsos negativos. Se comprobará con la
 misma partición y midiendo esa categoría de error, no solo el F1 macro.
 
-<<<<<<< HEAD
 ## Resultados y cierre (LAB06 · Embeddings y redes)
 
 ```bash
@@ -226,7 +225,7 @@ sustituidos por un marcador (`<TELÉFONO>`), para comprobar si *call* deja de es
 por plantillas de spam repetidas y si su vecindario pasa a ser mayoritariamente
 conversacional. En la red, recalcular las centralidades usando los pesos (1–7) y comparar
 si cambian los nodos con mayor intermediación.
-=======
+
 ## Uso de herramientas de IA
 
 **Herramienta:** Claude Code (Anthropic), modelo Claude Opus 5.5, en la aplicación de
@@ -271,7 +270,6 @@ borradores del cierre interpretativo y la conclusión.
   apuntaba al archivo de demostración, por lo que un clon nuevo no era reproducible; se
   corrigió y se comprobó con una copia limpia.
 - Se retiraron afirmaciones de los borradores que no pudieron comprobarse con los datos.
->>>>>>> LAB05
 
 ## Interpretación
 
