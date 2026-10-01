@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import joblib
@@ -9,8 +10,26 @@ from sklearn.metrics import ConfusionMatrixDisplay, classification_report, f1_sc
 from sklearn.model_selection import train_test_split
 
 from inf8239_u02.config import ROOT, settings
-from inf8239_u02.data import load_dataset, validate_dataframe
+from inf8239_u02.data import anonymize_text, load_dataset, validate_dataframe
 from inf8239_u02.modeling import build_models
+
+
+def keep_manual_review(errors: pd.DataFrame, path: Path) -> pd.DataFrame:
+    """Conserva la clasificación manual (y los [NOMBRE] puestos a mano) de errores repetidos."""
+    errors = errors.assign(category="REVISAR")
+    if not path.exists():
+        return errors
+    previous = pd.read_csv(path)
+    rows = []
+    for row in errors.to_dict("records"):
+        for old in previous.to_dict("records"):
+            pattern = re.escape(str(old["text"])).replace(re.escape("[NOMBRE]"), r"\w+")
+            same = old["real"] == row["real"] and old["predicted"] == row["predicted"]
+            if same and re.fullmatch(pattern, row["text"]):
+                row = old
+                break
+        rows.append(row)
+    return pd.DataFrame(rows)
 
 
 def main() -> None:
@@ -46,8 +65,11 @@ def main() -> None:
     plt.savefig(reports / "confusion_text.png", dpi=170)
     errors = pd.DataFrame({"text": x_test, "real": y_test, "predicted": selected_pred})
     errors = errors[errors["real"] != errors["predicted"]].copy()
-    errors["category"] = "REVISAR"
-    errors.to_csv(reports / "error_analysis.csv", index=False)
+    errors["text"] = errors["text"].map(anonymize_text)
+    errors_path = reports / "error_analysis.csv"
+    errors = keep_manual_review(errors, errors_path)
+    errors.to_csv(errors_path, index=False)
+    print(f"Errores: {len(errors)} · pendientes de clasificar: {(errors['category'] == 'REVISAR').sum()}")
     joblib.dump(selected, models_dir / "text_model.joblib")
     print("\nArtefactos guardados en reports/ y models/")
 

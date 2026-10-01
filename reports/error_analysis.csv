@@ -1,26 +1,26 @@
-text,real,predicted,category
-I am waiting for your call sir.,ham,spam,REVISAR
-Your daily text from me – a favour this time,ham,spam,REVISAR
-Burger King - Wanna play footy at a top stadium? Get 2 Burger King before 1st Sept and go Large or Super with Coca-Cola and walk out a winner,spam,ham,REVISAR
-I'm at work. Please call,ham,spam,REVISAR
-Want explicit SEX in 30 secs? Ring 02073162414 now! Costs 20p/min,spam,ham,REVISAR
-Missed call alert. These numbers called but left no message. 07008009200,spam,ham,REVISAR
-Money i have won wining number 946 wot do i do next,spam,ham,REVISAR
-"In The Simpsons Movie released in July 2007 name the band that died at the start of the film? A-Green Day, B-Blue Day, C-Red Day. (Send A, B or C)",spam,ham,REVISAR
-ringtoneking 84484,spam,ham,REVISAR
-"Plz note: if anyone calling from a mobile Co. &amp; asks u to type # &lt;#&gt;  or # &lt;#&gt; . Do not do so. Disconnect the call,coz it iz an attempt of 'terrorist' to make use of the sim card no. Itz confirmd by nokia n motorola n has been verified by CNN IBN.",ham,spam,REVISAR
-ASKED 3MOBILE IF 0870 CHATLINES INCLU IN FREE MINS. INDIA CUST SERVs SED YES. L8ER GOT MEGA BILL. 3 DONT GIV A SHIT. BAILIFF DUE IN DAYS. I O £250 3 WANT £800,spam,ham,REVISAR
-Glad to see your reply.,ham,spam,REVISAR
-"Sir, i am waiting for your call, once free please call me.",ham,spam,REVISAR
-Babe: U want me dont u baby! Im nasty and have a thing 4 filthyguys. Fancy a rude time with a sexy bitch. How about we go slo n hard! Txt XXX SLO(4msgs),spam,ham,REVISAR
-Are you free now?can i call now?,ham,spam,REVISAR
-Hi Harish's rent has been transfred to ur Acnt.,ham,spam,REVISAR
-Would you like to see my XXX pics they are so hot they were nearly banned in the uk!,spam,ham,REVISAR
-Want explicit SEX in 30 secs? Ring 02073162414 now! Costs 20p/min Gsex POBOX 2667 WC1N 3XX,spam,ham,REVISAR
-"Latest News! Police station toilet stolen, cops have nothing to go on!",spam,ham,REVISAR
-Hi its LUCY Hubby at meetins all day Fri & I will B alone at hotel U fancy cumin over? Pls leave msg 2day 09099726395 Lucy x Calls£1/minMobsmoreLKPOBOX177HP51FL,spam,ham,REVISAR
-I (Career Tel) have added u as a contact on INDYAROCKS.COM to send FREE SMS. To remove from phonebook - sms NO to  &lt;#&gt;,ham,spam,REVISAR
-I'm at home. Please call,ham,spam,REVISAR
-Total video converter free download type this in google search:),ham,spam,REVISAR
-Dont you have message offer,ham,spam,REVISAR
-"Please protect yourself from e-threats. SIB never asks for sensitive information like Passwords,ATM/SMS PIN thru email. Never share your password with anybody.",ham,spam,REVISAR
+text,real,predicted,category,note
+I am waiting for your call sir.,ham,spam,ambigüedad,Petición de llamada: 'call' domina y es muy frecuente en spam ('Call 0871…')
+Your daily text from me – a favour this time,ham,spam,ambigüedad,'daily text' y 'favour' evocan suscripciones y servicios por SMS
+Burger King - Wanna play footy at a top stadium? Get 2 Burger King before 1st Sept and go Large or Super with Coca-Cola and walk out a winner,spam,ham,ambigüedad,"Promoción de marca sin marcadores típicos (sin número, precio ni 'free/win' salvo 'winner')"
+I'm at work. Please call,ham,spam,ambigüedad,Petición de llamada corta: 'please call' es patrón típico de spam
+Want explicit SEX in 30 secs? Ring [TELÉFONO] now! Costs 20p/min,spam,ham,tema fuera del dominio,Spam de contenido adulto con número premium; subtema poco frecuente frente a premios/concursos
+Missed call alert. These numbers called but left no message. [TELÉFONO],spam,ham,ambigüedad,Imita una notificación legítima del operador ('Missed call alert')
+Money i have won wining number 946 wot do i do next,spam,ham,dialecto,"Jerga y faltas ('wot', 'wining') propias del ham informal"
+"In The Simpsons Movie released in July 2007 name the band that died at the start of the film? A-Green Day, B-Blue Day, C-Red Day. (Send A, B or C)",spam,ham,ambigüedad,Parece trivia entre amigos; sin premio ni número explícito
+ringtoneking 84484,spam,ham,texto insuficiente,Solo una palabra y un código corto; muy poca evidencia para TF-IDF
+"Plz note: if anyone calling from a mobile Co. &amp; asks u to type # &lt;#&gt;  or # &lt;#&gt; . Do not do so. Disconnect the call,coz it iz an attempt of 'terrorist' to make use of the sim card no. Itz confirmd by nokia n motorola n has been verified by CNN IBN.",ham,spam,etiqueta discutible,Cadena viral de advertencia (hoax) etiquetada ham; su forma es de mensaje masivo
+ASKED 3MOBILE IF 0870 CHATLINES INCLU IN FREE MINS. INDIA CUST SERVs SED YES. L8ER GOT MEGA BILL. 3 DONT GIV A SHIT. BAILIFF DUE IN DAYS. I O £250 3 WANT £800,spam,ham,etiqueta discutible,"Queja de un usuario sobre su factura, no una oferta; etiqueta spam cuestionable"
+Glad to see your reply.,ham,spam,texto insuficiente,Frase corta y genérica; 'reply' pesa hacia spam
+"Sir, i am waiting for your call, once free please call me.",ham,spam,ambigüedad,"Combina 'call' y 'free', dos términos fuertemente asociados a spam"
+Babe: U want me dont u baby! Im nasty and have a thing 4 filthyguys. Fancy a rude time with a sexy bitch. How about we go slo n hard! Txt XXX SLO(4msgs),spam,ham,dialecto,"Abreviaturas ('4', 'u', 'slo n hard') que se confunden con ham informal"
+Are you free now?can i call now?,ham,spam,ambigüedad,'free' y 'call' en un mensaje personal corto
+Hi [NOMBRE]'s rent has been transfred to ur Acnt.,ham,spam,ambigüedad,"Menciona dinero y cuenta ('transfred to ur Acnt'), vocabulario de fraude"
+Would you like to see my XXX pics they are so hot they were nearly banned in the uk!,spam,ham,tema fuera del dominio,Spam adulto sin llamada a la acción ni número; subtema poco representado
+Want explicit SEX in 30 secs? Ring [TELÉFONO] now! Costs 20p/min Gsex POBOX 2667 WC1N 3XX,spam,ham,tema fuera del dominio,Variante casi duplicada del caso 5; mismo subtema adulto poco representado
+"Latest News! Police station toilet stolen, cops have nothing to go on!",spam,ham,ironía,Chiste en formato de noticia; su etiqueta spam también es discutible
+Hi its LUCY Hubby at meetins all day Fri & I will B alone at hotel U fancy cumin over? Pls leave msg 2day [TELÉFONO] Lucy x Calls£1/minMobsmoreLKPOBOX177HP51FL,spam,ham,dialecto,"Escrito como mensaje personal ('B alone', '2day', 'cumin over')"
+I (Career Tel) have added u as a contact on INDYAROCKS.COM to send FREE SMS. To remove from phonebook - sms NO to  &lt;#&gt;,ham,spam,etiqueta discutible,Aviso automatizado de alta en servicio de SMS gratis; tiene forma de publicidad
+I'm at home. Please call,ham,spam,ambigüedad,Petición de llamada corta: 'please call'
+Total video converter free download type this in google search:),ham,spam,ambigüedad,'free download' es vocabulario típico de spam
+Dont you have message offer,ham,spam,texto insuficiente,Muy corto; 'message' y 'offer' pesan hacia spam
+"Please protect yourself from e-threats. SIB never asks for sensitive information like Passwords,ATM/SMS PIN thru email. Never share your password with anybody.",ham,spam,ambigüedad,Alerta de seguridad del banco: habla de fraude con el vocabulario del fraude

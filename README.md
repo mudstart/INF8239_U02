@@ -7,6 +7,7 @@ Proyecto base para LAB04–LAB06. No sustituya la comprensión por ejecución me
 ## Inicio rápido
 
 ```bash
+cp .env.example .env
 uv python install 3.12
 uv sync
 uv run pytest -q
@@ -14,7 +15,8 @@ uv run python scripts/prepare_sms_spam.py
 uv run python scripts/audit_data.py
 ```
 
-Copie `.env.example` como `.env` y configure el dataset aprobado.
+`.env.example` ya apunta al corpus aprobado (`data/raw/dataset.csv`); en PowerShell use
+`Copy-Item .env.example .env`. El archivo `.env` no se versiona.
 
 ## Dataset
 
@@ -64,6 +66,30 @@ Quien replique el proyecto debe tener en cuenta que:
 uv run python scripts/train_text.py
 uv run streamlit run app/streamlit_app.py
 ```
+
+`train_text.py` regenera `reports/error_analysis.csv` (textos anonimizados) y conserva la
+clasificación manual (`category`, `note`) de los errores que ya estaban revisados; los
+errores nuevos quedan como `REVISAR`.
+
+## Notebook ejecutado
+
+`notebooks/ejercicio03.ipynb` reúne la evidencia del Ejercicio 03 con salidas y gráficos:
+trazabilidad (SHA-256), auditoría, duplicados y prevención de fuga, baseline y dos
+pipelines, matrices de confusión y análisis de los 25 errores. Usa el paquete
+`inf8239_u02`, no modifica ningún artefacto y comprueba que sus resultados coinciden con
+`reports/`. Para reejecutarlo (requiere `data/raw/dataset.csv`):
+
+```bash
+uv run jupyter nbconvert --to notebook --execute --inplace notebooks/ejercicio03.ipynb
+```
+
+## Dependencias
+
+`uv.lock` es la fuente de verdad. `requirements.txt` es su exportación, para entornos sin
+uv (`pip install -r requirements.txt`); se regenera con
+`uv export --format requirements.txt --no-hashes --output-file requirements.txt`.
+`requirements-cloud.txt` (con hashes) es la versión para publicar la app y
+`requirements-colab.txt` la mínima para Google Colab.
 
 ## Resultados y conclusión (LAB05)
 
@@ -150,6 +176,51 @@ sugerencia, no como bloqueo. La hipótesis para el siguiente experimento es veri
 sustituir los números por marcadores y añadir n-gramas de caracteres debería reducir los
 falsos positivos por ambigüedad sin aumentar los falsos negativos. Se comprobará con la
 misma partición y midiendo esa categoría de error, no solo el F1 macro.
+
+## Uso de herramientas de IA
+
+**Herramienta:** Claude Code (Anthropic), modelo Claude Opus 5.5, en la aplicación de
+escritorio de Claude, con acceso al repositorio y a la terminal.
+
+**Uso:** apoyo para revisar el proyecto base frente a los manuales de LAB04 y LAB05,
+proponer y escribir código, ejecutar comandos, redactar borradores de documentación y
+detectar errores. El estudiante decidió el corpus, aprobó cada cambio, ejecutó los
+comandos del manual en su propia terminal para comprobar los resultados y es responsable
+de los datos, el código, las referencias y las conclusiones.
+
+**Prompts relevantes** (resumidos):
+
+- "Analízame este folder y dame un reporte."
+- "Estas son las indicaciones del trabajo; valida que los pasos se cumplem
+- "Crea el script que recomiendas" (descarga y conversión del ZIP de UCI).
+- "Haz un doble check en la verificacion."
+
+**Partes elaboradas con apoyo de IA:** `scripts/prepare_sms_spam.py`, la función
+`anonymize_text`, `keep_manual_review` y sus pruebas, el aviso de alcance de la app, `notebooks/ejercicio03.ipynb`,
+`reports/lab05_lectura_metricas.md`, la clasificación propuesta de los 25 errores y los
+borradores del cierre interpretativo y la conclusión.
+
+**Verificaciones realizadas:**
+
+- Los hashes SHA-256 del ZIP y del CSV coinciden con la ficha en varias ejecuciones,
+  incluidas copias limpias del repositorio siguiendo solo este README.
+- Las métricas (F1 macro 0,466 / 0,926 / 0,956) se reprodujeron en la terminal, en la copia limpia y en el notebook, y coinciden con `reports/text_metrics.csv`.
+- Los cinco ejemplos de la ficha se buscaron en el corpus y son únicos.
+- Las cifras sobre el corpus incluidas en los reportes se comprobaron contra los datos.
+
+**Correcciones realizadas durante el trabajo:**
+
+- El ejemplo 5 de la ficha no coincidía con el mensaje real (marcador `[TELÉFONO]` donde
+  no había número, `L2,000` en lugar de `£2,000`); se corrigió.
+- Un ejemplo de la ficha estaba duplicado en el corpus; se sustituyó por uno único.
+- `reports/error_analysis.csv` y un reporte contenían teléfonos y un nombre reales; se
+  anonimizaron y se añadió `anonymize_text` para que no se repita.
+- Reentrenar borró la clasificación de errores; se restauró, se verificó que corresponde
+  a los mismos 25 errores del modelo y `train_text.py` ahora la conserva al reentrenar.
+- `.env.example` y `.python-version` estaban excluidos por `.gitignore` y `.env.example`
+  apuntaba al archivo de demostración, por lo que un clon nuevo no era reproducible; se
+  corrigió y se comprobó con una copia limpia.
+- Se retiraron afirmaciones de los borradores que no pudieron comprobarse con los datos.
 
 ## Interpretación
 

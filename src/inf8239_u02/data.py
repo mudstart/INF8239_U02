@@ -1,11 +1,20 @@
 from __future__ import annotations
 
 import hashlib
+import re
 from pathlib import Path
 
 import pandas as pd
 
 from .config import settings
+
+# Números de 10 o más dígitos, con o sin guiones/espacios (p. ej. 09061701461, 0871-872-9755).
+PHONE_PATTERN = re.compile(r"\+?\d(?:[\s-]?\d){9,}")
+
+
+def anonymize_text(text: str) -> str:
+    """Sustituye números telefónicos por [TELÉFONO] antes de publicar ejemplos."""
+    return PHONE_PATTERN.sub("[TELÉFONO]", str(text))
 
 
 def sha256(path: Path) -> str:
